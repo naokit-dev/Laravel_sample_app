@@ -6,18 +6,17 @@ use Illuminate\Http\Request;
 
 use Validator;
 
-
-class SampleFormController extends Controller
+class SampleFormSecondController extends Controller
 {
-    private $formItems = ["first_name", "last_name"];
+    private $formItems = ["title", "body"];
 
     private $validator = [
-		"first_name" => "required|string",
-		"last_name" => "required|string",
+		"title" => "required|string",
+		"body" => "required|string"
 	];
 
     function show(){
-        return view("form");
+        return view("form_2");
     }
 
     function post(Request $request){
@@ -26,7 +25,7 @@ class SampleFormController extends Controller
         //validation 
         $validator = Validator::make($input, $this->validator);
 		if($validator->fails()){
-			return redirect()->action("SampleFormController@show")
+			return redirect()->action("SampleFormSecondController@show")
 				->withInput()
 				->withErrors($validator);
 		}
@@ -35,14 +34,14 @@ class SampleFormController extends Controller
         $request->session()->put("form_input", $input);
         
         //redirect to @confirm
-        return redirect()->action("SampleFormController@confirm");
+        return redirect()->action("SampleFormSecondController@confirm");
 
     }
 
     function confirm(Request $request){
         $input = $request->session()->get("form_input");
 
-        return view("form_confirm", ["input" => $input]);
+        return view("form_confirm_2", ["input" => $input]);
     }
 
     function send(Request $request){
@@ -50,7 +49,7 @@ class SampleFormController extends Controller
 
         // redirect to @show if request include "back"
         if($request->has("back")){
-            return redirect()->action("SampleFormController@show")->withInput($input);
+            return redirect()->action("SampleFormSecondController@show")->withInput($input);
         }
 
         //***add send acction***
@@ -58,11 +57,11 @@ class SampleFormController extends Controller
         //clear session
         $request->session()->forget("form_input");
         
-        return redirect()->action("SampleFormController@complete");
+        return redirect()->action("SampleFormSecondController@complete");
     }
 
     function complete(){
-        return view("form_complete");
+        return view("form_complete_2");
     }
 
 }

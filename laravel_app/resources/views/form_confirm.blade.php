@@ -1,17 +1,14 @@
+<h2>フォーム 1</h2>
 <h3>確認</h3>
 <form method="post" action="{{ route('form.send') }}">
     @csrf
-    <label>Name</label>
+    <label>First Name</label>
 	<div>
-		{{ $input["name"] }}
+		{{ $input["first_name"] }}
 	</div>
-	<label>Title</label>
+	<label>Last Name</label>
 	<div>
-		{{ $input['title'] }}
-	</div>
-	<label>Body</label>
-	<div>
-		{{ $input['body'] }}
+		{{ $input['last_name'] }}
 	</div>
 
 	<input name="back" type="submit" value="戻る" />
